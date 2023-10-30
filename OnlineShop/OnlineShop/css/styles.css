@@ -1,0 +1,141 @@
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+*,*:before,*:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing:  border-box;
+}
+
+nav,footer,header,aside{display: block;}
+
+html,body {
+	height: 100%;
+	width:  100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust:  100%;
+}
+
+input,button,textarea{font-family: inherit;}
+
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner{padding:0;border:0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+
+:root {
+	--card-width: 200px;
+}
+
+h1 {
+	padding-left: 30px;
+}
+
+.header-area {
+	position: relative;
+	display: flex;
+	background-color: #fff;
+	padding: 15px 0px;
+	border-bottom: solid 1px;
+	width: 100%;
+}
+
+.header-area.sticky {
+	position: fixed;
+	top: 0;
+}
+
+.content {
+	display: flex;
+	width: 100%;
+}
+
+.header-area.sticky + .content {
+	padding-top: 55px;
+}
+
+.filter-area {
+	padding-top: 20px;
+	padding-right: 30px;
+	width: 25rem;
+/* 	-webkit-box-shadow: 2px 0px 8px 0px rgba(34, 60, 80, 0.2);
+	-moz-box-shadow: 2px 0px 8px 0px rgba(34, 60, 80, 0.2);
+	box-shadow: 2px 0px 8px 0px rgba(34, 60, 80, 0.2); */
+}
+
+.category {
+	margin-bottom: 25.6px;
+	padding-left: 15px;
+}
+
+.category h2 {
+	font-size: 2rem;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+.filter-checkbox {
+	word-break: break-all;
+	font-size: 1.4rem;
+	cursor: pointer;
+	display: flex;
+    gap: 10px;
+    align-items: center;
+    width: fit-content;
+    padding: 3px 0;
+    margin: 6px 0 6px 14px;
+    min-width: 20%;
+}
+
+.disabled {
+	cursor: not-allowed;
+	opacity: 0.4;
+}
+
+.filter-checkbox input {
+	cursor: pointer;
+	width: 1.2rem;
+	height: 1.2rem;
+	flex-shrink: 0;
+}
+
+.filter-checkbox input:disabled {
+	cursor: not-allowed;
+}
+
+.filter-checkbox[disabled] {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.goods-area {
+	margin: 40px;
+	flex: 1;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
+	grid-auto-rows: min-content;
+	gap: 20px;
+}
+
+.good-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 1rem;
+	padding: 20px 0;
+	box-shadow: 0px 0px 11px 0px rgb(66, 65, 65);
+	height: 100%;
+
+	font-size: 25px;
+	line-height: 1.2;
+}

@@ -1,0 +1,27 @@
+@page {
+	margin: 1cm;
+}
+
+.filter-area {
+	display: none;
+}
+
+.goods-area {
+	margin-top: 0;
+	grid-template-columns: repeat(auto-fill);
+	justify-items: center;
+	column-gap: 10px;
+	row-gap: 0px;
+}
+
+.good-card {
+	width: var(--card-width);
+	flex-shrink: 0;
+	break-inside: avoid;
+	height: fit-content;
+	/* height: 500px; */
+	/* min-height: 500px; */
+	/* box-shadow: none; */
+	/* border: solid 1px; */
+	margin-top: 25px;
+}
