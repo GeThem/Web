@@ -116,7 +116,7 @@ function updateFilters(selector, checkBoxes) {
         let secondPart = []
         let firstPart = []
         for (let checkbox of checkBoxes[category.getAttribute('name')]) {
-            firstChild.disabled ? secondPart.push(checkbox) : firstPart.push(checkbox)
+            checkbox.firstChild.disabled ? secondPart.push(checkbox) : firstPart.push(checkbox)
         }
     
         category.childNodes.forEach((child) => { if (child.tagName !== 'H2') child.remove() })
