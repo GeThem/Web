@@ -1,4 +1,4 @@
-import data from "./phones.json" assert { "type" : "json" }
+import {data} from "./phones.js"
 
 function htmlToElement(html) {
     var template = document.createElement('template');
@@ -14,7 +14,6 @@ function getCheckboxes(arr) {
         let vals = new Set
         for (let good of arr) {
             if (!good.hasOwnProperty(property)) {
-                good[property] = null
                 continue
             }
             good[property].forEach((item) => vals.add(item))
@@ -22,7 +21,7 @@ function getCheckboxes(arr) {
         for (let val of vals) {
             result[property].push(htmlToElement(`<label class="filter-checkbox"><input type="checkbox" name="${property}" value="${val}">${val}</label>`))
         }
-        result[property].sort((a, b) => { return a.firstChild.value.localeCompare(b.firstChild.value) })
+        result[property].sort((a, b) => { return a.firstChild.value.localeCompare(b.firstChild.value, undefined, {numeric: true, sensitivity: 'base'}) })
     }
     return result
 }
@@ -102,9 +101,9 @@ function printFilters(selector, checkBoxes) {
         let secondPart = ''
         if (checkBoxes[property].length == 0)
             continue
-        let temp = htmlToElement(`<div class="category" name="${property}"><h2>${data.properties[property]}</h2></div>`)
+        let temp = htmlToElement(`<div class="category" name="${property}"><h2>${data.properties[property]}</h2><div class="checkboxes"></div></div>`)
         for (let checkbox of checkBoxes[property]) {
-            temp.appendChild(checkbox)
+            temp.childNodes[1].appendChild(checkbox)
         }
         document.querySelector(selector).appendChild(temp)
     }
@@ -113,31 +112,36 @@ function printFilters(selector, checkBoxes) {
 function updateFilters(selector, checkBoxes) {   
     let filterArea = document.querySelector(selector)
     for (let category of filterArea.childNodes) {
-        let secondPart = []
         let firstPart = []
+        let secondPart = []
+        let thirdPart = []
         for (let checkbox of checkBoxes[category.getAttribute('name')]) {
-            checkbox.firstChild.disabled ? secondPart.push(checkbox) : firstPart.push(checkbox)
+            checkbox.firstChild.disabled ? thirdPart.push(checkbox) : checkbox.firstChild.checked ? firstPart.push(checkbox) : secondPart.push(checkbox)
         }
-    
-        category.childNodes.forEach((child) => { if (child.tagName !== 'H2') child.remove() })
-        firstPart.forEach((item) => category.appendChild(item))
-        secondPart.forEach((item) => category.appendChild(item))
+
+        category.childNodes[1].childNodes.forEach((child) => { if (child.tagName !== 'H2') child.remove() })
+        firstPart.forEach((item) => category.childNodes[1].appendChild(item))
+        secondPart.forEach((item) => category.childNodes[1].appendChild(item))
+        thirdPart.forEach((item) => category.childNodes[1].appendChild(item))
     }
 }
 
 function printGoods(selector, arr) {
-    let output = ''
+    document.querySelector(selector).innerHTML = ""
     for (let good of arr) {
-        output += `
+        let output = htmlToElement(`
         <div class="good-card">
-            <span>${good.name}</span>
-            <span>${good.genre}</span>
-            <span>${good.year}</span>
-            <span>${good.raiting}</span>
+            <div class="image-part"><image src="${good.images}"></div>
+            <div class="good-card--info"><h3>${good.name}</h3></div>
         </div>
-        `
+        `)
+        for (let property in data.properties) {
+            output.childNodes[3].appendChild(htmlToElement(`
+            <span><span class="info">${data.properties[property]}:</span> ${(good[property].join(", "))}</span>
+            `))
+        }
+        document.querySelector(selector).appendChild(output)
     }
-    document.querySelector(selector).innerHTML = output
 }
 
 function filterGoods(currFilter, arr) {
