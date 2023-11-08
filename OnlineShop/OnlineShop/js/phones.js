@@ -4,7 +4,8 @@ export const data =
         "brand": "Производитель",
         "internal_memory": "Встроенная память",
         "RAM": "Оперативная память",
-        "colors": "Цвета"
+        "colors": "Цвета",
+        "body": "Корпус"
     },
     "data": [
         {
@@ -25,6 +26,9 @@ export const data =
             ],
             "images" : [
                 "//avatars.mds.yandex.net/get-mpic/5323357/img_id3558307848953245905.png/300x300"
+            ],
+            "body" : [
+                "металлический"
             ]
         },
         {

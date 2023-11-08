@@ -35,36 +35,40 @@ function checkboxChanged(target, checkBoxes, filter, goods) {
 
     for (let property of Object.keys(checkBoxes).sort((a, b) => { return a == target.name ? 1 : -1 })) {
         for (let checkbox of checkBoxes[property]) {
-            // if (check_box.firstChild.checked)
-            //     continue
-            // filter[check_box.firstChild.name].add(check_box.firstChild.value)
-            // check_box.firstChild.disabled = true
-            // for (let good of goods) {
-            //     if (fitsFilter(filter, good) && good[check_box.firstChild.name].includes(check_box.firstChild.value)) {
-            //         check_box.firstChild.disabled = false
-            //         break
-            //     }
-            // }
-            // filter[check_box.firstChild.name].delete(check_box.firstChild.value)
-
-
-            checkbox.firstChild.disabled = true
             let checked = true
-            if (!checkbox.firstChild.checked) {
-                checked = false
-                filter[checkbox.firstChild.name].add(checkbox.firstChild.value)
+            if (checkbox.firstChild.checked) {
+                continue
             }
-            checkbox.firstChild.checked = false
+            checked = false
+            filter[checkbox.firstChild.name].add(checkbox.firstChild.value)
+            checkbox.firstChild.disabled = true
             for (let good of goods) {
                 if (fitsFilter(filter, good) && good[checkbox.firstChild.name].includes(checkbox.firstChild.value)) {
                     checkbox.firstChild.disabled = false
-                    if (checked)
-                        checkbox.firstChild.checked = true
                     break
                 }
             }
-            if (!checked || checkbox.firstChild.disabled)
+            if (!checked)
                 filter[checkbox.firstChild.name].delete(checkbox.firstChild.value)
+
+
+            // checkbox.firstChild.disabled = true
+            // let checked = true
+            // if (!checkbox.firstChild.checked) {
+            //     checked = false
+            //     filter[checkbox.firstChild.name].add(checkbox.firstChild.value)
+            // }
+            // checkbox.firstChild.checked = false
+            // for (let good of goods) {
+            //     if (fitsFilter(filter, good) && good[checkbox.firstChild.name].includes(checkbox.firstChild.value)) {
+            //         checkbox.firstChild.disabled = false
+            //         if (checked)
+            //             checkbox.firstChild.checked = true
+            //         break
+            //     }
+            // }
+            // if (!checked || checkbox.firstChild.disabled)
+            //     filter[checkbox.firstChild.name].delete(checkbox.firstChild.value)
 
 
             if (checkbox.firstChild.disabled)
@@ -97,8 +101,6 @@ function fitsFilter(filter, item) {
 
 function printFilters(selector, checkBoxes) {
     for (let property in checkBoxes) {
-        let firstPart = ''
-        let secondPart = ''
         if (checkBoxes[property].length == 0)
             continue
         let temp = htmlToElement(`<div class="category" name="${property}"><h2>${data.properties[property]}</h2><div class="checkboxes"></div></div>`)
@@ -119,7 +121,7 @@ function updateFilters(selector, checkBoxes) {
             checkbox.firstChild.disabled ? thirdPart.push(checkbox) : checkbox.firstChild.checked ? firstPart.push(checkbox) : secondPart.push(checkbox)
         }
 
-        category.childNodes[1].childNodes.forEach((child) => { if (child.tagName !== 'H2') child.remove() })
+        category.childNodes[1].innerHTML = ""
         firstPart.forEach((item) => category.childNodes[1].appendChild(item))
         secondPart.forEach((item) => category.childNodes[1].appendChild(item))
         thirdPart.forEach((item) => category.childNodes[1].appendChild(item))
@@ -136,6 +138,8 @@ function printGoods(selector, arr) {
         </div>
         `)
         for (let property in data.properties) {
+            if (!good.hasOwnProperty(property))
+                continue
             output.childNodes[3].appendChild(htmlToElement(`
             <span><span class="info">${data.properties[property]}:</span> ${(good[property].join(", "))}</span>
             `))

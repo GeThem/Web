@@ -54,11 +54,13 @@ h1 {
 .header-area.sticky {
 	position: fixed;
 	top: 0;
+	z-index: 99;
 }
 
 .content {
 	display: flex;
-	width: 70%;
+	padding: 0 30px;
+	max-width: 1360px;
 	min-width: min-content;
 	margin: auto;
 }

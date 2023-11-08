@@ -3,7 +3,8 @@
 }
 
 .content {
-	width: 80%;
+	width: 100%;
+	padding: 0;
 }
 
 .header-area.sticky {
@@ -11,7 +12,21 @@
 }
 
 .filter-area {
-	display: none;
+	/* display: none; */
+	width: 25vw;
+}
+
+.category {
+	page-break-inside: avoid;
+}
+
+.filter-area * {
+	word-wrap: break-word;
+}
+
+.checkboxes {
+	max-height: fit-content;
+	overflow-y: none;
 }
 
 .goods-area {
