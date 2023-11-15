@@ -19,7 +19,7 @@ html,body {
 	line-height: 1;
 	font-size: 14px;
 	-ms-text-size-adjust: 100%;
-	-webkit-text-size-adjust:  100%;
+	-webkit-text-size-adjust: 100%;
 }
 
 input,button,textarea{font-family: inherit;}
@@ -38,13 +38,16 @@ img{vertical-align: top;}
 	--card-height: 240px;
 }
 
-h1 {
-	padding-left: 30px;
+
+.content {
+	display: flex;
+	width: 70%;
+	min-width: min-content;
+	margin: auto;
 }
 
 .header-area {
 	position: relative;
-	display: flex;
 	background-color: #fff;
 	padding: 15px 0px;
 	border-bottom: solid 1px;
@@ -56,11 +59,40 @@ h1 {
 	top: 0;
 }
 
-.content {
-	display: flex;
-	width: 70%;
-	min-width: min-content;
-	margin: auto;
+.header-area a {
+	display: inline-block;
+	padding: 10px;
+	font-size: 20px;
+	text-decoration: none;
+	color: black;
+	border: solid black 1px;
+	background-color: #d8d8d8;
+	border-radius: 0.5rem;
+	margin-left: 10px;
+}
+
+.header-area a:hover {
+	transition: 150ms;
+	background-color: white;
+}
+
+.header-area > .content {
+	--_padding: 20px;
+	width: auto;
+	max-width: calc(1500px + var(--_padding) * 2);
+	padding-inline: var(--_padding);
+}
+
+.header-area > .content * {
+	margin-block: auto;
+}
+
+.header-area > .content *:first-child {
+	margin-right: auto;
+}
+
+.header-area > .content *:nth-child(2) {
+	margin-left: auto;
 }
 
 .header-area.sticky + .content {
@@ -80,18 +112,19 @@ h1 {
 .category {
 	margin-bottom: 25.6px;
 	padding-left: 15px;
+	& h2 {
+		font-size: 2rem;
+		width: 100%;
+		margin-bottom: 10px;
+		padding: 5px;
+	}
 }
+
+/* .category  */
 
 .checkboxes {
 	max-height: 200px;
 	overflow-y: auto;
-}
-
-.category h2 {
-	font-size: 2rem;
-	width: 100%;
-	margin-bottom: 10px;
-	padding: 5px;
 }
 
 .filter-checkbox {
@@ -156,6 +189,10 @@ h1 {
 	font-size: 18px;
 	white-space: nowrap;
 	overflow: hidden;
+	
+	@media screen and (max-width: 694px) {
+		display: none;
+	}
 }
 
 .good-card--info h3 {

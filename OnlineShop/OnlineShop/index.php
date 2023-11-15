@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,11 @@
 </head>
 <body>
 	<header class="header-area">
-		<h1>My site</h1>
+		<div class="content">
+			<h1>My site</h1>
+			<a href="login.php">Вход</a> 
+			<a href="login.php">Регистрация</a> 
+		</div>
 	</header>
 	
 	<div class="content">
