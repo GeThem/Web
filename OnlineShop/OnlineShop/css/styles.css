@@ -15,7 +15,6 @@ nav,footer,header,aside{display: block;}
 html,body {
 	height: 100%;
 	width:  100%;
-	font-size: 100%;
 	line-height: 1;
 	font-size: 14px;
 	-ms-text-size-adjust: 100%;
@@ -27,7 +26,7 @@ input,button,textarea{font-family: inherit;}
 input::-ms-clear{display: none;}
 button{cursor: pointer;}
 button::-moz-focus-inner{padding:0;border:0;}
-a, a:visited{text-decoration: none;}
+a, a:visited{text-decoration: none; color: black;}
 a:hover{text-decoration: none;}
 ul li{list-style: none;}
 img{vertical-align: top;}
@@ -38,18 +37,35 @@ img{vertical-align: top;}
 	--card-height: 240px;
 }
 
-
 .content {
 	display: flex;
-	width: 70%;
+	width: 72%;
+	padding-inline: 10px;
 	min-width: min-content;
 	margin: auto;
+
+	/* display: flex;
+	padding: 0 30px;
+	max-width: 1360px;
+	min-width: min-content;
+	margin: auto; */
 }
+
+h1 {
+	white-space: nowrap;
+	flex: 0;
+	font-size: 2rem !important;
+}
+
+h1 > a {
+	display: block;
+	padding: 1.8rem 1rem;
+	font-size: 100% !important;
+ }
 
 .header-area {
 	position: relative;
 	background-color: #fff;
-	padding: 15px 0px;
 	border-bottom: solid 1px;
 	width: 100%;
 }
@@ -60,7 +76,7 @@ img{vertical-align: top;}
 	z-index: 99;
 }
 
-.header-area a {
+.header-area a:not(h1 a):not(ul a) {
 	display: inline-block;
 	padding: 10px;
 	font-size: 20px;
@@ -69,10 +85,9 @@ img{vertical-align: top;}
 	border: solid black 1px;
 	background-color: #d8d8d8;
 	border-radius: 0.5rem;
-	margin-left: 10px;
 }
 
-.header-area a:hover {
+.header-area a:hover:not(h1 a):not(ul a) {
 	transition: 150ms;
 	background-color: white;
 }
@@ -82,17 +97,14 @@ img{vertical-align: top;}
 	width: auto;
 	max-width: calc(1500px + var(--_padding) * 2);
 	padding-inline: var(--_padding);
+	gap: 10px
 }
 
 .header-area > .content * {
 	margin-block: auto;
 }
 
-.header-area > .content *:first-child {
-	margin-right: auto;
-}
-
-.header-area > .content *:nth-child(2) {
+.header-area > .content *:nth-child(3) {
 	margin-left: auto;
 }
 
@@ -113,12 +125,14 @@ img{vertical-align: top;}
 .category {
 	margin-bottom: 25.6px;
 	padding-left: 15px;
-	& h2 {
-		font-size: 2rem;
-		width: 100%;
-		margin-bottom: 10px;
-		padding: 5px;
-	}
+
+}
+
+.category h2 {
+	font-size: 2rem;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 5px;
 }
 
 /* .category  */
@@ -166,9 +180,8 @@ img{vertical-align: top;}
 	margin: 40px auto;
 	flex: 2;
 	display: grid;
-	grid-template-columns: repeat(1, minmax(var(--card-width), var(--card-min-width)));
+	grid-template-columns: minmax(var(--card-min-width), 1fr);
 	grid-auto-rows: var(--card-height);
-	grid-auto-columns: auto;
 	gap: 20px;
 }
 
@@ -181,6 +194,7 @@ img{vertical-align: top;}
 	width: 100%;
 	font-size: 25px;
 	line-height: 1.2;
+
 }
 
 .good-card--info {
@@ -190,9 +204,19 @@ img{vertical-align: top;}
 	font-size: 18px;
 	white-space: nowrap;
 	overflow: hidden;
-	
-	@media screen and (max-width: 694px) {
+}
+
+@media screen and (max-width: 694px) {
+	.good-card--info {
 		display: none;
+	}
+
+	.good-card {
+		width: min-content;
+	}
+
+	.goods-area {
+		grid-template-columns: 1fr;
 	}
 }
 
@@ -225,4 +249,23 @@ img{vertical-align: top;}
 	height: 100%;
 	width: auto;
 	margin: auto;
+}
+
+ul {
+	margin-left: 2rem;
+	font-size: 1.2rem;
+}
+
+ul li a{
+	display: block;
+	
+	padding: 1.8rem 0.8rem;
+	border-inline: solid 1px black;
+	transition: all ease 0.3s;
+	/* padding: 1.2rem; */
+	/* padding-block: 1.5rem; */
+}
+
+ul li a:hover {
+	background-color: #d8d8d8;
 }

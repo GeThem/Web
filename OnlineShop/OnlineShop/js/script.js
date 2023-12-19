@@ -129,7 +129,8 @@ function updateFilters(selector, checkBoxes) {
 }
 
 function printGoods(selector, arr) {
-    document.querySelector(selector).innerHTML = ""
+    let elem = document.querySelector(selector)
+    elem.innerHTML = ""
     for (let good of arr) {
         let output = htmlToElement(`
         <div class="good-card">
@@ -144,7 +145,7 @@ function printGoods(selector, arr) {
             <span><span class="info">${data.properties[property]}:</span> ${(good[property].join(", "))}</span>
             `))
         }
-        document.querySelector(selector).appendChild(output)
+        elem.appendChild(output)
     }
 }
 
@@ -157,36 +158,33 @@ function filterGoods(currFilter, arr) {
     return result
 }
 
-$(document).ready(() => {
-    const currentFilter = {}
-    for (let property in data.properties) {
-        currentFilter[property] = new Set()
-    }
+const currentFilter = {}
+for (let property in data.properties) {
+    currentFilter[property] = new Set()
+}
 
-    let checkBoxes = getCheckboxes(data.data)
-    printFilters('.filter-area', checkBoxes)
-    printGoods('.goods-area', filterGoods(currentFilter, data.data))
+let checkBoxes = getCheckboxes(data.data)
+printFilters('.filter-area', checkBoxes)
+printGoods('.goods-area', filterGoods(currentFilter, data.data))
 
-    for (let property in checkBoxes) {
-        checkBoxes[property].forEach((box) => {
-            box.addEventListener("change", (e) => {
-                checkboxChanged(e.target, checkBoxes, currentFilter, data.data)
-                printGoods('.goods-area', filterGoods(currentFilter, data.data))
-                updateFilters('.filter-area', checkBoxes)
-            })
+for (let property in checkBoxes) {
+    checkBoxes[property].forEach((box) => {
+        box.addEventListener("change", (e) => {
+            checkboxChanged(e.target, checkBoxes, currentFilter, data.data)
+            printGoods('.goods-area', filterGoods(currentFilter, data.data))
+            updateFilters('.filter-area', checkBoxes)
         })
+    })
+}
+
+window.onscroll = function () { myFunction() };
+let header = document.querySelector('.header-area')
+let sticky = header.offsetTop;
+
+function myFunction() {
+    if (window.scrollY > sticky) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
     }
-
-    window.onscroll = function () { myFunction() };
-
-    let header = document.querySelector('.header-area')
-    let sticky = header.offsetTop;
-
-    function myFunction() {
-        if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
-    }
-});
+}

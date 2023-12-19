@@ -1,0 +1,99 @@
+* {
+    font-size: 1.5rem;
+}
+
+body {
+    display: grid;
+    grid-template-rows: min-content auto;
+}
+
+.content-grid {
+    display: grid;
+    place-content: center;
+    grid-template-rows: auto;
+}
+
+form {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    row-gap: 2rem;
+    align-items: center;
+}
+
+.grid-col-span-3 {
+    grid-column: span 3;
+}
+
+.grid-row-span-2 {
+    grid-row-end: span 2;
+}
+
+.grid-sec-row {
+    grid-row-start: 2;
+}
+
+.grid-third-row {
+    grid-row-start: 3;
+}
+
+.grid-third-col {
+    grid-column-start: 3;
+}
+
+.grid-first-col {
+    grid-column-start: 1;
+    justify-self: right;
+}
+
+.grid-sec-col {
+    grid-column-start: 2;
+}
+
+input:not([type="checkbox"]) {
+    border-radius: 0.4rem;
+    border: 1px solid black;
+    padding-inline: 0.5rem;
+    display: inline-block;
+    position: relative;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+    border: 1px solid black;
+    padding-block: 2.5px;
+    width: 60%;
+    justify-self: center;
+}
+
+.filter-checkbox {
+    margin: 0;
+    margin-inline-start: 1rem;
+    padding: 0;
+    user-select: none;
+}
+
+.filter-checkbox > input {
+    display: none;
+}
+
+.error {
+    background-color: rgb(197, 0, 0);
+    border: 1px solid red;
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    text-wrap: wrap;
+    padding: 0.3rem;
+    font-size: 1rem;
+    color: white;
+}
+
+.hide {
+    display: none;
+}
+
+.input-wrapper {
+    position: relative;
+}

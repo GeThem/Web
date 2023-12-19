@@ -1,4 +1,6 @@
 <?php
+include("auth.php");
+$_SESSION['frompage'] = "index.php";
 ?>
 
 <!DOCTYPE html>
@@ -8,17 +10,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/styles.css">
 	<link media="print" rel="stylesheet" href="css/styles-print.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<title>Document</title>
 </head>
 <body>
-	<header class="header-area">
-		<div class="content">
-			<h1>My site</h1>
-			<a href="login.php">Вход</a> 
-			<a href="login.php">Регистрация</a> 
-		</div>
-	</header>
+	<?php include("partials-front/header.php"); ?>
 	
 	<div class="content">
 		<div class="filter-area"></div>
