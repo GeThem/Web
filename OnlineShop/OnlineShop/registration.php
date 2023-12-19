@@ -58,7 +58,7 @@ if(isset($_POST['submit']))
     if(count($err) == 0)
     {
         $password = md5(md5($_POST['password']));
-        $db->execute_query("INSERT INTO users SET user_login=?, user_password=?, user_email=?, user_hash=0, user_ip=0", [$_POST['login'], $password, $_POST['email']]);
+        $db->execute_query("INSERT INTO users SET user_login=?, user_password=?, user_email=?, user_hash=0", [$_POST['login'], $password, $_POST['email']]);
         header("Location: login.php"); exit();
     }
     else
