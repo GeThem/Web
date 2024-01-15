@@ -155,8 +155,8 @@ for (let elem of Object.keys(elems)) {
     });
 }
 
-for (let elem of Object.keys(elems)) {
-    if (!elems[elem][3](elems[elem][0])) {
-        showError(...elems[elem]);
-    }
-}
+// for (let elem of Object.keys(elems)) {
+//     if (!elems[elem][3](elems[elem][0])) {
+//         showError(...elems[elem]);
+//     }
+// }
