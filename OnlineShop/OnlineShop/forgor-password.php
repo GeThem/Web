@@ -23,6 +23,10 @@ if(isset($_POST['submit']))
         else
         {
             $success = true;
+            $token = strval(bin2hex(random_bytes(16)));
+            $token_hash = md5($token);
+            $expiry = time() + 60 * 30;
+            $db->execute_query("UPDATE users SET reset_token_hash=?, reset_token_expires_at=? WHERE user_email=?", [$token_hash, $expiry, $_POST['login-email']]);
         }
     }
     else 
@@ -47,6 +51,10 @@ if(isset($_POST['submit']))
         if(count($err) == 0)
         {
             $success = true;
+            $token = bin2hex(random_bytes(16));
+            $token_hash = md5($token);
+            $expiry = time() + 60 * 30;
+            $db->execute_query("UPDATE users SET reset_token_hash=?, reset_token_expires_at=? WHERE user_login=?", [$token_hash, $expiry, $_POST['login-email']]);
         }
         else
         {
@@ -67,7 +75,7 @@ if(isset($_POST['submit']))
 <!DOCTYPE html>
 <html lang="en">
     <head> 
-        <title>Авторизация пользователя</title> 
+        <title>Забыл пароль</title> 
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/styles-login.css">
     </head> 
@@ -89,9 +97,8 @@ if(isset($_POST['submit']))
                     </form>';
             } else {
                 echo '
-                    <form novalidate action="registration.php" method="post"> 
-                        <span style="font-size: 3rem; text-align: center;">Ссылка для восстановления пароля была отправлена по адресу '.blur($query->fetch_assoc()['user_email']).'</span>
-                    </form>';
+                    <span style="font-size: 3rem; text-align: center;">Ссылка для восстановления пароля была отправлена по адресу '.blur($query->fetch_assoc()['user_email']).'</span>
+                    <span style="justify-self: center; margin-top: 30px;"><a href="http://localhost:3000/OnlineShop/OnlineShop/reset-password.php?token='.$token.'">The link</a></span>';
             }
             ?>
            

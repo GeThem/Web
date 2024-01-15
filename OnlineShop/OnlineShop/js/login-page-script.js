@@ -44,7 +44,7 @@ if (form.action.substring(form.action.lastIndexOf("/") + 1) === "registration.ph
         password : [document.querySelector("input[name='password']"), document.querySelector("input[name='password'] + span.error"), {
             valueMissing: "Куда без пароля?",
             tooShort: `Пароль должен быть хотя-бы ${document.querySelector("input[name='password']").minLength} символов`,
-            tooLong: `Пароль должен быть короче ${document.querySelector("input[name='login']").maxLength} символов`
+            tooLong: `Пароль должен быть короче ${document.querySelector("input[name='password']").maxLength} символов`
         }, (elem) => {
             if (elems.password[0].value === elems.password2[0].value) {
                 elems.password2[1].textContent = "";
@@ -57,11 +57,32 @@ if (form.action.substring(form.action.lastIndexOf("/") + 1) === "registration.ph
         password2 : [document.querySelector("input[name='password2']"), document.querySelector("input[name='password2'] + span.error"), {
             valueMissing: "Надо бы заполнить",
             tooShort: `Пароль должен быть хотя-бы ${document.querySelector("input[name='password2']").minLength} символов.`,
-            tooLong: `Пароль должен быть короче ${document.querySelector("input[name='login']").maxLength} символов`,
+            tooLong: `Пароль должен быть короче ${document.querySelector("input[name='password2']").maxLength} символов`,
             special: 'Пароли не совпадают'
         }, validate_password2]
     }
-
+} else if (form.action.substring(form.action.lastIndexOf("/") + 1).startsWith("reset-password.php")) {
+    elems = {
+        password : [document.querySelector("input[name='password']"), document.querySelector("input[name='password'] + span.error"), {
+            valueMissing: "Куда без пароля?",
+            tooShort: `Пароль должен быть хотя-бы ${document.querySelector("input[name='password']").minLength} символов`,
+            tooLong: `Пароль должен быть короче ${document.querySelector("input[name='password']").maxLength} символов`
+        }, (elem) => {
+            if (elems.password[0].value === elems.password2[0].value) {
+                elems.password2[1].textContent = "";
+                elems.password2[1].classList.add("hide");
+            } else if (elems.password2[0].value.length !== 0) {
+                showError(...elems.password2);
+            }
+            return validate(elem);
+        }],
+        password2 : [document.querySelector("input[name='password2']"), document.querySelector("input[name='password2'] + span.error"), {
+            valueMissing: "Надо бы заполнить",
+            tooShort: `Пароль должен быть хотя-бы ${document.querySelector("input[name='password2']").minLength} символов.`,
+            tooLong: `Пароль должен быть короче ${document.querySelector("input[name='password2']").maxLength} символов`,
+            special: 'Пароли не совпадают'
+        }, validate_password2]
+    }
 } else {
     elems = {
         login : [document.querySelector("input[name='login']"), document.querySelector("input[name='login'] + span.error"), {

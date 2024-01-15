@@ -41,6 +41,10 @@ form {
     grid-column-start: 3;
 }
 
+.grid-first-row {
+    grid-row-start: 1;
+}
+
 .grid-first-col {
     grid-column-start: 1;
     justify-self: right;
@@ -70,7 +74,6 @@ input[type="submit"] {
     margin: 0;
     margin-inline-start: 1rem;
     padding: 0;
-    user-select: none;
 }
 
 .filter-checkbox > input {
@@ -96,4 +99,10 @@ input[type="submit"] {
 
 .input-wrapper {
     position: relative;
+}
+
+span a {
+    text-decoration: underline;
+    color: rgb(5, 115, 255);
+    font-size: 2rem;
 }
