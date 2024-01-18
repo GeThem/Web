@@ -48,7 +48,7 @@ h2 {
     font-weight: normal;
 }
 
-img {
+form img {
     width: 128px;
     height: 128px;
     margin: 20px;
@@ -57,4 +57,18 @@ img {
 
 input[type="file"][name="image"] {
     display: none;
+}
+
+.del-img {
+    cursor: pointer;
+    padding-block: 15px;
+    padding-inline: 20px;
+    background-color: red;
+    border-radius: 0.4rem;
+    color: white;
+}
+
+.del-img:hover {
+    background-color: rgba(255, 0, 0, 0.6);
+    transition: ease all 0.3s;
 }

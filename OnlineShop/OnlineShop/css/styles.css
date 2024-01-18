@@ -63,11 +63,17 @@ h1 > a {
 	font-size: 100% !important;
  }
 
+
 .header-area {
 	position: relative;
 	background-color: #fff;
 	border-bottom: solid 1px;
 	width: 100%;
+}
+
+.header-area img {
+	height: 48px;
+	width: 48px;
 }
 
 .header-area.sticky {
@@ -291,4 +297,9 @@ ul li a:hover {
 .good-card {
 	position: relative;
 	z-index: 1;
+}
+
+.pfp {
+	padding: 0px !important;
+	border: 0 !important;
 }

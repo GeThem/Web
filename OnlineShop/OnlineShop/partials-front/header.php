@@ -1,5 +1,12 @@
 <?php 
-include("../variables.php")
+include("../variables.php");
+include("../auth.php");
+
+$pfp = $URL.'user/pfp/default.jpg'; 
+if ($userdata['pfp']) {
+	$pfp =  $URL.'user/pfp/'.$userdata['user_id'].'.png';
+}
+
 ?>
 
 <header class="header-area">
@@ -12,7 +19,7 @@ include("../variables.php")
 			<button class="register">Регистрация</button>';
 		} else {
 			echo '<ul><li><a href="'.$URL.'secret-place.php">Registered Users Special</a></h2></li></ul>';
-			echo '<span style="font-size: 1.5rem;"><a href="'.$URL.'user/profile.php">'.$userdata['user_login'].'</a>';
+			echo '<a class="pfp" href="'.$URL.'user/profile.php"><img src="'.$pfp.'" alt=""></a>';
 			echo '<a href="'.$URL.'logout.php">Выйти</a>';
 		}  
 		?>

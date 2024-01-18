@@ -1,4 +1,4 @@
-var img = document.querySelector("img");
+var img = document.querySelector("form img");
 var load_img = document.querySelector('img + input[type="file"][name="image"]');
 var del_img = document.querySelector('.del-img');
 
@@ -18,5 +18,4 @@ load_img.addEventListener('change', event => {
 
 del_img.addEventListener('click', event => {
     img.attributes['src'].value = 'pfp/default.jpg';
-    load_img.value = '';
 })
