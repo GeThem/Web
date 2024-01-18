@@ -62,10 +62,10 @@ if(isset($_POST['submit']))
         <?php include("partials-front/header.php"); ?>
         
         <div class="content-grid">
-            <form novalidate action="login.php" method="post"> 
-            <span class="grid-first-col">Логин:</span>
+            <form class="login-register" novalidate action="login.php" method="post"> 
+                <span class="grid-first-col">Логин:</span>
                 <div class="input-wrapper">
-                    <input type="text" name="login" minlength=5 maxlength=30 pattern="[a-zA-Z0-9_-]+" value="<?php echo $_POST['login']?>">
+                    <input type="text" name="login" minlength=5 maxlength=30 pattern="[a-zA-Z0-9_\-]+" value="<?php echo $_POST['login']?>">
                     <span class="grid-sec-col error hide"></span>
                 </div>
                 <span class="grid-first-col">Пароль:</span>
@@ -83,5 +83,6 @@ if(isset($_POST['submit']))
         </div>
 
         <script type="module" src="js/login-page-script.js"></script>
+        <script type="module" src="js/msg-control.js"></script>
     </body> 
 </html> 

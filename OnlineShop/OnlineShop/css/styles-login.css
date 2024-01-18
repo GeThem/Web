@@ -1,4 +1,4 @@
-* {
+body * {
     font-size: 1.5rem;
 }
 
@@ -13,7 +13,7 @@ body {
     grid-template-rows: auto;
 }
 
-form {
+.login-register {
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 10px;
@@ -54,7 +54,7 @@ form {
     grid-column-start: 2;
 }
 
-input:not([type="checkbox"]) {
+.login-register input:not([type="checkbox"]) {
     border-radius: 0.4rem;
     border: 1px solid black;
     padding-inline: 0.5rem;
@@ -62,7 +62,7 @@ input:not([type="checkbox"]) {
     position: relative;
 }
 
-input[type="submit"] {
+.login-register input[type="submit"] {
     cursor: pointer;
     border: 1px solid black;
     padding-block: 2.5px;
@@ -70,13 +70,13 @@ input[type="submit"] {
     justify-self: center;
 }
 
-.filter-checkbox {
+.login-register .filter-checkbox {
     margin: 0;
     margin-inline-start: 1rem;
     padding: 0;
 }
 
-.filter-checkbox > input {
+.login-register .filter-checkbox > input {
     display: none;
 }
 
@@ -97,12 +97,22 @@ input[type="submit"] {
     display: none;
 }
 
-.input-wrapper {
+.login-register .input-wrapper {
     position: relative;
 }
 
-span a {
+.login-register span a {
     text-decoration: underline;
     color: rgb(5, 115, 255);
     font-size: 2rem;
+}
+
+.login-register-content {
+    background-color: white;
+    border: 1px solid black;
+    padding: 20px;
+    z-index: 120;
+    position: fixed;
+    right: 20px;
+    top: 65px;
 }

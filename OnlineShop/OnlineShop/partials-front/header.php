@@ -1,15 +1,19 @@
+<?php 
+include("../variables.php")
+?>
+
 <header class="header-area">
 	<div class="content">
-		<h1><a href="index.php">My site</a></h1>
+		<h1><a href="<?php print $URL ?>index.php">My site</a></h1>
 		<?php 
 		if (!isset($userdata["loggedin"]) or !$userdata["loggedin"]) {
             echo '<ul></ul>';
-			echo '<a href="login.php">Вход</a> 
-			<a href="registration.php">Регистрация</a>';
+			echo '<button class="login">Вход</button> 
+			<button class="register">Регистрация</button>';
 		} else {
-			echo '<ul><li><a href="secret-place.php">Registered Users Special</a></h2></li></ul>';
-			echo '<span style="font-size: 1.5rem;">Welcome, '.$userdata['user_login'].'!</span>';
-			echo '<form action="auth.php" method="post"><label><a>Выйти</a><input type="submit" name="submit" value=""></label></form>';
+			echo '<ul><li><a href="'.$URL.'secret-place.php">Registered Users Special</a></h2></li></ul>';
+			echo '<span style="font-size: 1.5rem;"><a href="'.$URL.'user/profile.php">'.$userdata['user_login'].'</a>';
+			echo '<a href="'.$URL.'logout.php">Выйти</a>';
 		}  
 		?>
 	</div>

@@ -87,7 +87,7 @@ if(isset($_POST['submit']))
             <?php
             if (!$success) {
                 echo '
-                    <form novalidate action="forgor-password.php" method="post"> 
+                    <form class="login-register" novalidate action="forgor-password.php" method="post"> 
                         <span class="grid-first-col">Введите логин или почту:</span>
                         <div class="input-wrapper">
                             <input type="text" name="login-email" maxlength=32 required value="'.$_POST['login-email'].'">

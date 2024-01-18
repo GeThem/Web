@@ -1,0 +1,60 @@
+.tabs {
+    display: flex;
+    margin-inline: 20%;
+    margin-top: 5rem;
+    gap: 5rem;
+}
+
+.tabs-menu {
+    border-right: 1px solid black;
+    height: fit-content;
+    display: grid;
+    gap: 1px;
+    padding-right: 5px;
+}
+
+.tabs-menu-item {
+    background-color: white;
+    padding-block: 0.5rem;
+    padding-inline: 2rem;
+}
+
+.is-active {
+    background-color: rgb(211, 211, 211);
+    border-radius: 0.3rem;
+    box-shadow: inset 1px 1px 0 black,
+                inset -1px -1px 0 black;
+}
+
+.tabs-menu-item:not(.is-active):hover {
+    /* background-color: rgb(211, 211, 211); */
+    --_shadow_color: rgba(0, 0, 0, .4);
+    box-shadow: inset 0 1px 0 var(--_shadow_color),
+                inset 0 -1px 0 var(--_shadow_color);
+}
+
+.tabs-content {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+h2 {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid black;
+    margin-bottom: 2rem;
+    font-weight: normal;
+}
+
+img {
+    width: 128px;
+    height: 128px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+input[type="file"][name="image"] {
+    display: none;
+}

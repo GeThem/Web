@@ -2,39 +2,46 @@
 sleep(1);
     
 include("sanitize-input.php");
+include("variables.php");
 
 if (isset($_POST["submit"]))
-{
+{  
     if (strlen($_POST['password']) < 5 or strlen($_POST['password']) > 32)
     {
-        print '<div style="position: absolute; z-index: 99; background: rgb(200, 50, 50, 0.8); border: 1px solid black; padding: 20px; left: 5%; top: 10rem; width: 30%;">
+        print '<div class="msg" style="position: absolute; z-index: 99; background: rgb(200, 50, 50, 0.8); border: 1px solid black; padding: 20px; left: 5%; top: 10rem; width: 30%;">
         <b>Пароль должен быть не меньше 5-и символов и не больше 32</b><br></div>';
     }
     else if ($_POST['password'] !== $_POST['password2']) 
     {
-        print '<div style="position: absolute; z-index: 99; background: rgb(200, 50, 50, 0.8); border: 1px solid black; padding: 20px; left: 5%; top: 10rem; width: 30%;">
+        print '<div class="msg" style="position: absolute; z-index: 99; background: rgb(200, 50, 50, 0.8); border: 1px solid black; padding: 20px; left: 5%; top: 10rem; width: 30%;">
         <b>Пароли не совпадают</b><br></div>';
     }
     else 
     {
         $token = $_POST["token"];
         $token_hash = md5($token);
-        $db = new mysqli("localhost", "root", "1234", "onlineshop");
         $query = $db->execute_query("SELECT * FROM users WHERE reset_token_hash=? LIMIT 1", [$token_hash]);
         if ($query->num_rows === 0) {
-            die("token not found");
-        }
-        $result = $query->fetch_assoc();
-        if ($result["reset_token_expires_at"] <= time()) {
-            die("token has expired");
+            if (isset($_SESSION['token']) and md5($_POST['token']) !== $_SESSION['token_hash'] and $_SESSION['token_expiry'] < time()) {
+                die("token not found");
+            }
+        } else {
+            $result = $query->fetch_assoc();
+            if ($result["reset_token_expires_at"] <= time()) {
+                die("token has expired");
+            }
         }
 
         $pw = md5(md5($_POST['password']));
         $query = $db->execute_query("UPDATE users SET user_password=?, reset_token_hash = NULL, reset_token_expires_at = NULL WHERE user_id=?", [$pw, $result["user_id"]]);
-        header("Location: login.php");
+        if (isset($_SESSION["from-page"])) {
+            header("Location: ".$_SESSION["from-page"]); exit;
+        } else {
+            header("Location: login.php");
+        }
     }
 }
-else
+else if (isset($_GET["token"]))
 {
     $token = $_GET["token"];
     $token_hash = md5($token);
@@ -46,6 +53,10 @@ else
     if ($query->fetch_assoc()["reset_token_expires_at"] <= time()) {
         die("token has expired");
     }
+}
+else 
+{
+    header("Location: index.php");
 }
 ?>
 
@@ -60,7 +71,7 @@ else
         <?php include("partials-front/header.php"); ?>
 
         <div class="content-grid">
-            <form novalidate action="reset-password.php" method="post"> 
+            <form class="login-register" novalidate action="reset-password.php" method="post"> 
                 
                 <input type="hidden" name="token" value="<?php echo sanitize($token) ?>">
                 <span class="grid-first-col">Пароль:</span>
@@ -82,5 +93,6 @@ else
         </div>
 
         <script type="module" src="js/login-page-script.js"></script>
+        <script type="module" src="js/msg-control.js"></script>
     </body> 
 </html> 

@@ -1,11 +1,6 @@
 import {data} from "./phones.js"
+import * as utils from "./utils.js"
 
-function htmlToElement(html) {
-    var template = document.createElement('template');
-    html = html.trim();
-    template.innerHTML = html;
-    return template.content.firstChild;
-}
 
 function getCheckboxes(arr) {
     let result = {}
@@ -19,7 +14,7 @@ function getCheckboxes(arr) {
             good[property].forEach((item) => vals.add(item))
         }
         for (let val of vals) {
-            result[property].push(htmlToElement(`<label class="filter-checkbox"><input type="checkbox" name="${property}" value="${val}">${val}</label>`))
+            result[property].push(utils.htmlToElement(`<label class="filter-checkbox"><input type="checkbox" name="${property}" value="${val}">${val}</label>`))
         }
         result[property].sort((a, b) => { return a.firstChild.value.localeCompare(b.firstChild.value, undefined, {numeric: true, sensitivity: 'base'}) })
     }
@@ -103,7 +98,7 @@ function printFilters(selector, checkBoxes) {
     for (let property in checkBoxes) {
         if (checkBoxes[property].length == 0)
             continue
-        let temp = htmlToElement(`<div class="category" name="${property}"><h2>${data.properties[property]}</h2><div class="checkboxes"></div></div>`)
+        let temp = utils.htmlToElement(`<div class="category" name="${property}"><h2>${data.properties[property]}</h2><div class="checkboxes"></div></div>`)
         for (let checkbox of checkBoxes[property]) {
             temp.childNodes[1].appendChild(checkbox)
         }
@@ -132,7 +127,7 @@ function printGoods(selector, arr) {
     let elem = document.querySelector(selector)
     elem.innerHTML = ""
     for (let good of arr) {
-        let output = htmlToElement(`
+        let output = utils.htmlToElement(`
         <div class="good-card">
             <div class="image-part"><image src="${good.images}"></div>
             <div class="good-card--info"><h3>${good.name}</h3></div>
@@ -141,7 +136,7 @@ function printGoods(selector, arr) {
         for (let property in data.properties) {
             if (!good.hasOwnProperty(property))
                 continue
-            output.childNodes[3].appendChild(htmlToElement(`
+            output.childNodes[3].appendChild(utils.htmlToElement(`
             <span><span class="info">${data.properties[property]}:</span> ${(good[property].join(", "))}</span>
             `))
         }
@@ -175,16 +170,4 @@ for (let property in checkBoxes) {
             updateFilters('.filter-area', checkBoxes)
         })
     })
-}
-
-window.onscroll = function () { myFunction() };
-let header = document.querySelector('.header-area')
-let sticky = header.offsetTop;
-
-function myFunction() {
-    if (window.scrollY > sticky) {
-        header.classList.add("sticky");
-    } else {
-        header.classList.remove("sticky");
-    }
 }

@@ -1,16 +1,11 @@
 <?php
 
 include("sanitize-input.php");
-
-function checkEmail($email) {
-    $find1 = strpos($email, '@');
-    $find2 = strpos($email, '.');
-    return ($find1 !== false && $find2 !== false && $find2 > $find1);
- }
+include("utils.php");
+include("variables.php");
 
 if(isset($_POST['submit']))
 {    
-    $db = new mysqli("localhost", "root", "1234", "onlineshop");
     $err = array();
     $_POST['email'] = sanitize($_POST['email']);
     $_POST['login'] = sanitize($_POST['login']);
@@ -20,34 +15,25 @@ if(isset($_POST['submit']))
     {
         $err[] = "Логин должен быть не меньше 5-и символов и не больше 30";
     }
-    else if(!preg_match("/^[a-zA-Z0-9_-]+$/",$_POST['login']))
+    if(!preg_match("/^[a-zA-Z0-9_-]+$/",$_POST['login']))
     {
         $err[] = "Логин не соответствует паттерну";
     }
-    else
+    $query = $db->execute_query("SELECT * FROM users WHERE user_login=? LIMIT 1", [$_POST['login']]);
+    if($query->num_rows > 0)
     {
-        $query = $db->execute_query("SELECT * FROM users WHERE user_login=? LIMIT 1", [$_POST['login']]);
-        if($query->num_rows > 0)
-        {
-            $err[] = "Пользователь с таким логином уже существует в базе данных";
-        }
+        $err[] = "Пользователь с таким логином уже существует в базе данных";
     }
 
-    if(strlen($_POST['email']) > 30)
-    {
+    if (strlen($_POST['email']) > 30) {
         $err[] = "Почтовый адрес должен быть не больше 30 символов";
-    }
-    else if (!checkEmail($_POST['email'])) 
-    {
-        $err[] = "Строка не является почтовым адресом";
-    }
-    else
-    {
-        $query = $db->execute_query("SELECT * FROM users WHERE user_email=? LIMIT 1", [$_POST['email']]);
-        if($query->num_rows > 0)
-        {
-            $err[] = "Данная почта привязана к другому аккаунту";
-        }
+    } 
+    if (!checkEmail($_POST['email'])) {
+        $err[] = "Строка не является почтовым адресом".$_POST['email'];
+    } 
+    $query = $db->execute_query("SELECT * FROM users WHERE user_email=? LIMIT 1", [$_POST['email']]);
+    if ($query->num_rows > 0) {
+        $err[] = "Данная почта привязана к другому аккаунту";
     }
     
     if(strlen($_POST['password']) < 5 or strlen($_POST['password']) > 32)
@@ -68,7 +54,7 @@ if(isset($_POST['submit']))
     }
     else
     {
-        print '<div style="position: absolute; z-index: 99; background: rgb(200, 50, 50, 0.8); border: 1px solid black; padding: 20px; left: 5%; top: 10rem; width: 30%;">
+        print '<div class="msg" style="position: absolute; z-index: 99; background: rgb(200, 50, 50, 0.8); border: 1px solid black; padding: 20px; left: 5%; top: 10rem; width: 30%;">
         <b>При регистрации произошли следующие ошибки:</b><br>';
         foreach($err AS $error)
         {
@@ -93,7 +79,7 @@ if(isset($_POST['submit']))
         <?php include("partials-front/header.php"); ?>
 
         <div class="content-grid">
-            <form novalidate action="registration.php" method="post"> 
+            <form class="login-register" novalidate action="registration.php" method="post"> 
                 <span class="grid-first-col">Почта:</span>
                 <div class="input-wrapper">
                     <input type="email" name="email" maxlength=30 required value="<?php echo $_POST['email']?>">
@@ -101,7 +87,7 @@ if(isset($_POST['submit']))
                 </div>
                 <span class="grid-first-col">Логин:</span>
                 <div class="input-wrapper">
-                    <input type="text" name="login" minlength=5 maxlength=30 pattern="[a-zA-Z0-9_-]+" required value="<?php echo $_POST['login']?>">
+                    <input type="text" name="login" minlength=5 maxlength=30 pattern="[a-zA-Z0-9_\-]+" required value="<?php echo $_POST['login']?>">
                     <span class="grid-sec-col error hide"></span>
                 </div>
                 <span class="grid-first-col">Пароль:</span>
@@ -123,5 +109,6 @@ if(isset($_POST['submit']))
         </div>
 
         <script type="module" src="js/login-page-script.js"></script>
+        <script type="module" src="js/msg-control.js"></script>
     </body> 
 </html> 
