@@ -48,11 +48,19 @@ h2 {
     font-weight: normal;
 }
 
-form img {
+.img-wrapper {
     width: 128px;
     height: 128px;
     margin: 20px;
     cursor: pointer;
+    display: grid;
+    place-items: center;
+    place-self: center;
+}
+
+form img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 input[type="file"][name="image"] {

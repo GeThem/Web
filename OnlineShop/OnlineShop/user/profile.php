@@ -4,14 +4,15 @@ include("../auth.php");
 if (!$userdata['loggedin']) {
     header("Location: ../index.php"); exit();
 }
+if (strcmp($userdata['user_id'], $_GET['edit']) !== 0) {
+    header("Location: ".$URL."?&edit=".$userdata['user_id']."&section=".$_GET["section"]);
+}
 
 include("../sanitize-input.php");
 
 $token = bin2hex(random_bytes(16));
 $token_hash = md5($token);
-$expiry = time() + 60;
 $_SESSION['token'] = $token_hash;
-$_SESSION['token_expiry'] = $expiry;
 $_SESSION["from-page"] = "user/profile.php";
 // $db->execute_query("UPDATE users SET reset_token_hash=?, reset_token_expires_at=? WHERE user_login=?", [$token_hash, $expiry, $_POST['login-email']]);
 
@@ -59,14 +60,14 @@ if (isset($_SESSION['error']) and count($_SESSION['error']) > 0) {
                     <input type="hidden" name="token" value="<?php echo $token ?>">
                     
                     <span class="grid-first-col">Аватар:</span>
-                    <div class="input-wrapper">
+                    <div class="input-wrapper img-wrapper">
                         <img src="<?php
-                            if ($userdata['pfp']) { 
+                            if ($userdata['pfp'] === 1) { 
                                 echo "pfp/".$userdata['user_id'].'.png';
                             } else {
-                                 echo "pfp/default.jpg";
-                             } ?>" alt="nothing">
-                        <input type="file" name="image">
+                                echo "pfp/default.jpg";
+                            } ?>" alt="nothing">
+                        <input id="input-image" type="file" name="image" accept="image/*">
                     </div>
                     <div class="del-img grid-first-row grid-third-col">Удалить</div>
 

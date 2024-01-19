@@ -1,5 +1,6 @@
 var buttons = document.querySelectorAll(".tabs .tabs-menu .tabs-menu-item");
 var tabs = document.querySelectorAll(".tabs .tabs-content");
+var params = new URLSearchParams(window.location.href)
 
 function changeUrl(section) {
     let i = window.location.href.indexOf('?') ;
@@ -8,7 +9,7 @@ function changeUrl(section) {
     } else {
         var ref = window.location.href.slice(0, i)
     }
-    window.history.replaceState({},"", `${ref}?&edit=1&section=${section}`)
+    window.history.replaceState({},"", `${ref}?&edit=${params.get('edit')}&section=${section}`)
 }
 
 buttons.forEach(element => {
@@ -27,14 +28,11 @@ buttons.forEach(element => {
     })
 });
 
-var params = new URLSearchParams(window.location.href)
 var i = -1;
-for (const [key, value] of params) {
-    if (key == "section") {
-        i = Array.from(buttons).findIndex((elem) => { return elem.attributes["data-key"].value == value; });
-    }
+if (params.get('section') != null) {
+    var i = Array.from(buttons).findIndex((elem) => { return elem.attributes["data-key"].value == params.get('section'); });
 }
-if (i !== -1) {
+if (i != -1) {
     buttons[i].classList.add("is-active");
     tabs[i].classList.add("active");
     changeUrl(buttons[i].attributes['data-key'].value);

@@ -72,8 +72,8 @@ h1 > a {
 }
 
 .header-area img {
-	height: 48px;
-	width: 48px;
+	max-height: 48px;
+	max-width: 48px;
 }
 
 .header-area.sticky {
@@ -277,7 +277,7 @@ ul li a:hover {
 	background-color: #d8d8d8;
 }
 
-.good-card:before {
+.good-card:before, .pfp:before {
     content: '';
     width: 100%;
     height: 100%;
@@ -289,7 +289,7 @@ ul li a:hover {
 }
 
 
-.good-card:hover:before {
+.good-card:hover:before, .pfp:hover:before {
     background-color: rgba(0, 0, 0, 0.153);
 	transition: 300ms ease background-color;
 }
@@ -300,6 +300,15 @@ ul li a:hover {
 }
 
 .pfp {
+	box-sizing: content-box;
+	position: relative;
 	padding: 0px !important;
 	border: 0 !important;
+	background-color: white !important;
+	display: grid !important;
+	place-items: center !important;
+	border: 1px solid gray !important;
+	border-radius: 0 !important;
+	width: 48px !important;
+	height: 48px !important;
 }
